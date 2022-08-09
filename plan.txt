@@ -1,0 +1,24 @@
+1. Scrape data off of website based off Course Code
+    - Course Abreviation.
+    - Course Name.
+    - # Course Code.
+    - # Units.
+    - # Maximum.
+    - # Enrolled.
+    - # Waitlisted.
+    - # Requested.
+    - # Reserved for New Only.
+    - Type (Lecture, Discussion, Lab, Seminar).
+    - Section (Letter)
+    - Instructor.
+
+3. Create Basic Website to display data
+
+4. Import Time to scrape data every Minute
+
+5. Save into Database
+
+6. Get Values from Database and make a chart appear on the website
+
+5. Display Multiple Websites
+

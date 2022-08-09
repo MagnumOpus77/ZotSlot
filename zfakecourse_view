@@ -1,0 +1,73 @@
+{% extends "api/base.html" %}
+{% load custom_tags %}
+{% block title %}View Classes{% endblock %}
+
+{% block content %}
+    <h1>{{u.name}}</h1>
+    <form method="post" action="#">
+        {% csrf_token %}
+        <ul>
+            {% for k,v in dicc.items %}
+                <li>Key {{k}}: a-Value {{v}} b-Value</li>
+            {% endfor %}
+        </ul>
+        <button type="submit", name="save", value="save">Save</button>
+        <input type="text", name="new">
+        <button type="submit", name="newItem", value="newItem">Add Item</button>
+    </form>
+{% endblock %} 
+
+////////////////////
+
+{% extends "api/base.html" %} {% load custom_tags %} {% block title %}View
+Classes{% endblock %} {% block content %}
+<h1>{{u.name}}</h1>
+<form method="post" action="#">
+  {% csrf_token %}
+  <ul>
+    {% for item in u.coursecode_set.all %}
+    <li>
+      {{item.class_name}}<br />
+      Class Code: {{item.code}}<br />
+      Enrolled: {{item.enrolled}}<br />
+      Max: {{item.max_capacity}}<br />
+      Waitlisted: {{item.waitlisted}}<br />
+      Reserved For New: {{item.reserved_new}}<br />
+
+      <h1>Pie Chart Population</h1>
+      <div id="container" style="width: 50%">
+        <canvas id="{{item.code}}"></canvas>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+      <script>
+        var config = {
+          type: 'pie',
+          data: {
+            datasets: [{
+              data: [{{item.enrolled}}, ({{item.max_capacity}}-{{item.enrolled}})],
+              backgroundColor: [
+                '#ff0000', '#0000ff'
+              ],
+              label: 'Population'
+            }],
+            labels: ['Enrolled', 'Seats Left']
+          },
+          options: {
+            responsive: true
+          }
+        };
+
+        window.onload = function() {
+          var ctx = document.getElementById({{item.code}}).getContext('2d');
+          window.myPie = new Chart(ctx, config);
+        };
+      </script>
+    </li>
+    {% endfor %}
+  </ul>
+  <input type="text" , name="new" />
+  <button type="submit" , name="newItem" , value="newItem">Add Item</button>
+</form>
+{% if invalid %}
+<h3>Invalid course code. Try again</h3>
+{% endif %} {% endblock %}
